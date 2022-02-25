@@ -1,0 +1,26 @@
+CSMM Handlebars script for rolling/rotating announcements/notifications.
+
+The script will iterate through the list of announcements, broadcasting one per execution.
+It uses a Persistent Variable to keep track. When the counter hits the max number, it will reset and start over.
+
+* Don't forget to set the maxAnn in line 2 to match the number of announcements.
+* Changing the hex numbers [89d1d6] will change the colour of the the chat message
+* Change <FakePlayerName> to whatever you like. You'll see something like:
+    FakePlayerName: Please /vote for our server! 
+
+{{setVar "counter" (add (getVar "counter") 1)}};
+{{setVar "maxAnn" 10}};
+{{setVar "Ann1" "[89d1d6] Announcement text here"}};
+{{setVar "Ann2" "[89d1d6] Announcement text here"}};
+{{setVar "Ann3" "[89d1d6] Announcement text here"}};
+{{setVar "Ann4" "[89d1d6] Announcement text here"}};
+{{setVar "Ann5" "[89d1d6] Announcement text here"}};
+{{setVar "Ann6" "[89d1d6] Announcement text here"}};
+{{setVar "Ann7" "[89d1d6] Announcement text here"}};
+{{setVar "Ann8" "[89d1d6] Announcement text here"}};
+{{setVar "Ann9" "[89d1d6] Announcement text here"}};
+{{setVar "Ann10" "[89d1d6] Announcement text here"}};
+{{#if (gte (getVar "counter") (getVar "maxAnn"))}}  
+  {{setVar "counter" 1}} 
+{{/if}};
+say2 <FakePlayerName> "{{getVar (add "Ann" (getVar "counter"))}}";
