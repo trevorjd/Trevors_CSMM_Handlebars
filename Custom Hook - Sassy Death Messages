@@ -1,0 +1,48 @@
+Custom Hook - ANIMAL KILLED
+
+This is a Custom Hook used to send a sassy private message to players when they kill an animal.
+*** It must be pasted into the hook as a single line. Remove all CRLF! Expanded out here for ease of editing. ***
+
+Custom Hook
+Event: animalKilled
+Cooldown: <Your choice, we use 1 sec>
+
+pm ${player.name} ${randList: 
+"[ffbb33] The RSPCA has been alerted to your killing of innocent animals.",
+"[ffbb33]Of all the animals- man is the only one that is cruel.",
+"[ffbb33]There is no excuse for animal abuse.",
+"[ffbb33]Evolve and end violence against animals.",
+"[ffbb33]Poor little animal all it wanted was a cuddle",
+"[ffbb33]that's so very cruel",
+"[ffbb33]For as long as men massacre animals they will kill each other. Indeed, he who sows the seed of murder and pain cannot reap joy of love.",
+"[ffbb33]May that rotting carcass' smell embed itself into your nostrils for life.",
+"[ffbb33]Obviously you are a cat person. Only cat people are that mean.",
+"[ffbb33]Murderers … very often start out by killing and torturing animals as kids.",
+"[ffbb33]What's that stench? It's fantastic!",
+"[ffbb33]All the perfumes of Arabia couldn’t make that kill smell better."}
+
+----
+
+Custom Hook - PLAYER DEATH
+
+This is a Custom Hook used to send a sassy public broadcast when players die.
+*** It must be pasted into the hook as a single line. Remove all CRLF! Expanded out here for ease of editing. ***
+
+Custom Hook
+Event: playerDeath
+Cooldown: <Your choice, we use 1 sec>
+
+say ${randList:
+"[ffbb33]{{player.name}} couldn't take it any more.",
+"[ffbb33]{{player.name}} was overwhelmed.",
+"[ffbb33]{{player.name}} ran out of ammo.",
+"[ffbb33]{{player.name}} zigged when they should've zagged.",
+"[ffbb33]{{player.name}} didn't make 7 days.",
+"[ffbb33]{{player.name}} is just a casual.",
+"[ffbb33]{{player.name}} will do better next time.",
+"[ffbb33]{{player.name}} is considering a ragequit.",
+"[ffbb33]{{player.name}} remembered the true meaning of Christmas.",
+"[ffbb33]{{player.name}} thought the green ones were safe to eat.",
+"[ffbb33]{{player.name}} isn't quite sure how they found themselves in this position.",
+"[ffbb33]{{player.name}} got distracted by a zebra.",
+"[ffbb33]{{player.name}} went to check on the onions."}
