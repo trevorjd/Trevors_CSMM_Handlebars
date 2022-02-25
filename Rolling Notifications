@@ -2,6 +2,7 @@ CSMM Handlebars script for rolling/rotating announcements/notifications.
 
 The script will iterate through the list of announcements, broadcasting one per execution.
 It uses a Persistent Variable to keep track. When the counter hits the max number, it will reset and start over.
+Use this script in the Server Automation section of CSMM. 
 
 * Don't forget to set the maxAnn in line 2 to match the number of announcements.
 * Changing the hex numbers [89d1d6] will change the colour of the the chat message
