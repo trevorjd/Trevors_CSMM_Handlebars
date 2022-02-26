@@ -1,0 +1,37 @@
+{This needs to be documented properly}
+
+SELECT FIVE REGIONS FOR RESET
+
+Run this just before your "resetregionsnow" reboot.
+
+mrr remove -4096 4096 4096 -4096; {{setVar "masterRegionList1" "r.-8.7.7rg,r.-8.6.7rg,r.-7.7.7rg,r.-6.6.7rg,r.-5.6.7rg,r.-6.5.7rg,r.-5.5.7rg,r.-7.4.7rg,r.-6.4.7rg,r.-5.4.7rg,r.-8.3.7rg,r.-7.3.7rg,r.-6.3.7rg,r.-8.2.7rg,r.-7.2.7rg,r.-6.2.7rg"}};
+{{setVar "masterRegionList2" "r.-7.-1.7rg,r.-7.-2.7rg,r.-6.-3.7rg,r.-5.-3.7rg,r.-6.-4.7rg,r.-5.-4.7rg,r.-8.-5.7rg,r.-7.-6.7rg,r.-8.-6.7rg,r.-7.-5.7rg,r.-8.-6.7rg,r.-7.-6.7rg,r.-8.-7.7rg"}};
+{{setVar "masterRegionList3" "r.-2.8.7rg,r.-1.8.7rg,r.-1.6.7rg,r.-2.-1.7rg,r.-1.-1.7rg,r.-2.-2.7rg,r.-1.-2.7rg,r.-3.-7.7rg,r.-2.-7.7rg,r.-1.-7.7rg,r.-3.-8.7rg,r.-2.-8.7rg,r.-1.-8.7rg"}};
+{{setVar "masterRegionList4" "r.4.8.7rg,r.4.7.7rg,r.4.4.7rg,r.4.3.7rg,r.5.3.7rg,r.2.2.7rg,r.3.2.7rg,r.2.1.7rg,r.3.1.7rg,r.4.1.7rg,r.2.0.7rg,r.3.0.7rg,r.4.0.7rg,r.2.-1.7rg,r.3.-1.7rg,r.4.-1.7rg,r.2.-2.7rg,r.3.-2.7rg,r.2.-3.7rg,r.3.-3.7rg"}};
+{{setVar "masterRegionList5" "r.6.1.7rg,r.7.1.7rg,r.6.0.7rg,r.7.0.7rg,r.6.-1.7rg,r.7.-1.7rg,r.8.-1.7rg,r.6.-2.7rg,r.7.-2.7rg,r.8.-2.7rg,r.7.-3.7rg,r.4.-4.7rg,r.5.-4.7rg,r.6.-4.7rg,r.7.-4.7rg,r.8.-4.7rg"}};
+{{setVar "masterRegionList6" "r.4.-5.7rg,r.5.-5.7rg,r.6.-5.7rg,r.7.-5.7rg,r.8.-5.7rg,r.4.-6.7rg,r.5.-6.7rg,r.6.-6.7rg,r.7.-6.7rg,r.8.-6.7rg,r.6.-7.7rg,r.7.-7.7rg,r.8.-7.7rg,r.6.-8.7rg,r.7.-8.7rg,r.8.-8.7rg"}}; {{#times 5}} mrr add {{itemAt (arrayify (split (getVar (add "masterRegionList" (randNum 1 6))))) (add -1 (randNum 1 (length (arrayify (split (getVar "masterRegionList"))))))}}; {{/times}}
+
+REBOOT SERVER TO RESET REGIONS
+
+resetregionsnow
+
+
+RESTORE ALL RESET REGIONS
+
+Run this as a Custom Hook
+Event:					logLine
+Regex trigger:	(Loading all items took: \d.\d{7} seconds.)
+
+mrr remove -4096 4096 4096 -4096;
+{{setVar "masterRegionList1" "r.-8.7.7rg,r.-8.6.7rg,r.-7.7.7rg,r.-6.6.7rg,r.-5.6.7rg,r.-6.5.7rg,r.-5.5.7rg,r.-7.4.7rg,r.-6.4.7rg,r.-5.4.7rg,r.-8.3.7rg,r.-7.3.7rg,r.-6.3.7rg,r.-8.2.7rg,r.-7.2.7rg,r.-6.2.7rg"}};
+{{setVar "masterRegionList2" "r.-7.-1.7rg,r.-7.-2.7rg,r.-6.-3.7rg,r.-5.-3.7rg,r.-6.-4.7rg,r.-5.-4.7rg,r.-8.-5.7rg,r.-7.-6.7rg,r.-8.-6.7rg,r.-7.-5.7rg,r.-8.-6.7rg,r.-7.-6.7rg,r.-8.-7.7rg"}};
+{{setVar "masterRegionList3" "r.-2.8.7rg,r.-1.8.7rg,r.-1.6.7rg,r.-2.-1.7rg,r.-1.-1.7rg,r.-2.-2.7rg,r.-1.-2.7rg,r.-3.-7.7rg,r.-2.-7.7rg,r.-1.-7.7rg,r.-3.-8.7rg,r.-2.-8.7rg,r.-1.-8.7rg"}};
+{{setVar "masterRegionList4" "r.4.8.7rg,r.4.7.7rg,r.4.4.7rg,r.4.3.7rg,r.5.3.7rg,r.2.2.7rg,r.3.2.7rg,r.2.1.7rg,r.3.1.7rg,r.4.1.7rg,r.2.0.7rg,r.3.0.7rg,r.4.0.7rg,r.2.-1.7rg,r.3.-1.7rg,r.4.-1.7rg,r.2.-2.7rg,r.3.-2.7rg,r.2.-3.7rg,r.3.-3.7rg"}};
+{{setVar "masterRegionList5" "r.6.1.7rg,r.7.1.7rg,r.6.0.7rg,r.7.0.7rg,r.6.-1.7rg,r.7.-1.7rg,r.8.-1.7rg,r.6.-2.7rg,r.7.-2.7rg,r.8.-2.7rg,r.7.-3.7rg,r.4.-4.7rg,r.5.-4.7rg,r.6.-4.7rg,r.7.-4.7rg,r.8.-4.7rg"}};
+{{setVar "masterRegionList6" "r.4.-5.7rg,r.5.-5.7rg,r.6.-5.7rg,r.7.-5.7rg,r.8.-5.7rg,r.4.-6.7rg,r.5.-6.7rg,r.6.-6.7rg,r.7.-6.7rg,r.8.-6.7rg,r.6.-7.7rg,r.7.-7.7rg,r.8.-7.7rg,r.6.-8.7rg,r.7.-8.7rg,r.8.-8.7rg"}};
+
+{{#times 7}}
+    {{#each (arrayify (split (getVar (add "masterRegionList" index))))}};
+        mrr add {{this}};
+    {{/each}};
+{{/times}}
