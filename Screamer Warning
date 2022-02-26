@@ -1,0 +1,28 @@
+This is a Custom Hook to provide a warning to players when a screamer/scout spawns.
+When a screamer spawns, players within 300m should receive a private message alerting them of the event. 
+Colour of the message can be adjusted by changing the value of [ff8a33]. It's currently a nice, semi-alarming orange.
+
+This mod was developed for a server running the Improved Hordes server-side mod by FilUnderscore.
+https://community.7daystodie.com/topic/26781-improved-hordes-a202/
+I think it should work without that mod but I haven't personally tested it.
+
+Event:				logLine
+
+Search string:   	name=zombieScreamer
+
+Custom var name:	xcoord
+Custom var value:	(?<= at \()-?\d{1,4}.\d
+
+Custom var name:	zcoord
+Custom var value:	(?<= at \(-?\d{1,4}.\d, -?\d{1,4}.\d, )-?\d{1,4}.\d
+
+
+Commands:
+
+{{#each server.onlinePlayers}}
+    {{#if (and (gte this.positionX (subtract ../custom.xcoord 300)) (lte this.positionX (sum ../custom.xcoord 300)))}}
+        {{#if (and (gte this.positionZ (subtract ../custom.zcoord 300)) (lte this.positionZ (sum ../custom.zcoord 300)))}}
+            pm Steam_{{this.steamId}} "[ff8a33]You hear someone or someTHING screaming nearby.";
+        {{/if}}
+    {{/if}}
+{{/each}}
