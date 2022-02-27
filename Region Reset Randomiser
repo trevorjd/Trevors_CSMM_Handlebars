@@ -1,9 +1,15 @@
 Region Reset Randomiser
 -----------------------
 
-Our server has 95 regions flagged as reset zones. Using the CSMM Patreon Mod, server admins can trigger a reboot that deletes all the saved data for all flagged regions, thus when the server restarts, those regions are untouched once more; all holes filled (thus ore deposits restored), all player structures gone. 
+Our server has 95 regions flagged as reset zones.
+Using the CSMM Patreon Mod, server admins can trigger a reboot that deletes all the saved data for all flagged regions, 
+thus when the server restarts, those regions are untouched once more; all holes filled (thus ore deposits restored), all player structures gone. 
 
-Running this on all regions at once creates two concerns. Firstly, too-frequent resets may unbalance a server economy (mudflation) and secondly, since the reset is done at a reboot, players who can jump on straight after a reset may gain an unfair benefit. With this in mind, I conceived a process to reset a randomly-selected subset of the total number of regions-to-reset. With this process, there will be some regeneration of resources for new players to find (and old-timers to mine) but players will have to search, rather than just returning to their favourite spots.
+Running this on all regions at once creates two concerns. Firstly, too-frequent resets may unbalance a server economy (mudflation) 
+and secondly, since the reset is done at a reboot, players who can jump on straight after a reset may gain an unfair benefit. With 
+this in mind, I conceived a process to reset a randomly-selected subset of the total number of regions-to-reset. With this process, 
+there will be some regeneration of resources for new players to find (and old-timers to mine) but players will have to search, 
+rather than just returning to their favourite spots.
 
 It runs as follows:
 1. Remove all region reset flags using "mrr remove"
@@ -13,9 +19,8 @@ It runs as follows:
 5. When the server comes back up, re-flag the full set so players can't build in areas that may be reset later.
 
 Notes:
-* Programatically building a list of currently flagged regions is beyond my ability. As such, I have hard-coded the region list.
-* From our pool of 95 regions, we're resetting only 5 per execution. This can be adjusted with the {{#times 5}} instruction in the first code block.
-* I am not a programmer. These scripts aren't optimised but they work well enough for our purposes.
+* Programatically building a list of currently-flagged regions is beyond my ability. As such, I have hard-coded the region list.
+* From our pool of 94 regions, we're resetting only 5 per execution. This can be adjusted with the {{#times 5}} instruction in the first code block.
 * I could not have done this without the generous assistance of RDois on the CSMM Discord. Thanks mate!
 
 
