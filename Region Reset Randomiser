@@ -1,67 +1,71 @@
 Region Reset Randomiser
 -----------------------
+2024/08/08 - Updated for 7 Days to Die v1.0
 
-Our server has 95 regions flagged as reset zones.
-Using the CSMM Patreon Mod, server admins can trigger a reboot that deletes all the saved data for all flagged regions, 
-thus when the server restarts, those regions are untouched once more; all holes filled (thus ore deposits restored), all player structures gone. 
+Using CSMM and the CSMM Patreon Mod (CPM), server admins can schedule automatic resets of flagged regions.  Following the "resetregions" 
+command, flagged regions are untouched once more; all holes filled and ore deposits restored, all player structures and vehicles gone. 
 
-Running this on all regions at once creates two concerns. Firstly, too-frequent resets may unbalance a server economy (mudflation) 
-and secondly, since the reset is done at a reboot, players who can jump on straight after a reset may gain an unfair benefit. With 
+Running this on all regions at once creates two concerns. Resetting all regions on a regular basis may unbalance a server economy (mudflation)
+and since reset times are predictable, players may camp their favourite looting locations to the detriment of other players.  With 
 this in mind, I conceived a process to reset a randomly-selected subset of the total number of regions-to-reset. With this process, 
 there will be some regeneration of resources for new players to find (and old-timers to mine) but players will have to search, 
 rather than just returning to their favourite spots.
 
-It runs as follows:
+It flows as follows:
 1. Remove all region reset flags using "mrr remove"
-2. Select X regions from the pool
+2. Select a number of regions from the pool
 3. Flag them for reset
-4. Run the reboot-with-reset using "resetregionsnow"
-5. When the server comes back up, re-flag the full set so players can't build in areas that may be reset later.
+4. Reset regions using the "resetregions" command
+5. Re-flag the full set of reset regions so players can't build in areas that may be reset later.
 
 Notes:
-* Programatically building a list of currently-flagged regions is beyond my ability. As such, I have hard-coded the region list.
-* From our pool of 94 regions, we're resetting only 5 per execution. This can be adjusted with the {{#times 5}} instruction in the first code block.
+* As of the CPM for 7DTD ver1.0, resetting regions is fast and does NOT require a reboot!
+* Programatically building a list of currently-flagged regions is beyond my ability. As such, when the server is initially set up, I generate
+a handlebars script containing commands to store the region list as variables.  See "Preparation", below.
+* From our pool of ~100 regions, we're resetting only 5 per execution. This can be adjusted with the {{#times 5}} instruction in the first code block.
 * I could not have done this without the generous assistance of RDois on the CSMM Discord. Thanks mate!
 
+PREPARATION
+* Once the server is up and running, use the CPM webUI to create claims and turn them into reset regions.  Once you're done, run the
+following command in the console:  w2l command "mrr list" splitlog
+* Open output.log and copy/paste the resulting list into Notepad++ then run some find and replaces to convert the list into the following format:
+{{setVar "masterRegionList1" "r.-8.7.7rg"}};{{setVar "masterRegionList2" "r.-8.6.7rg"}}; etc.
+(This could be done pretty easily with a python script but I'm no programmer!)
 
 SET MASTER REGION LIST
-* As these are persistent variables, the code only needs to be run once after the list is modified/updated.
+* This script takes the prepared "Master Region List" and stores contents as persistent variables.  
+* Add it to CSMM in Server Automation but leave it deactivated.
+* This script needs to be run manually after the list is created and if/when modified/updated.
 
 {{! Set Master Region List}}
 {{! Set this in Server Automation but leave it disabled.}}
 {{! Execute once with the Run Now button after modifying the list.}}
-{{setVar "masterRegionList1" "r.-8.7.7rg"}};{{setVar "masterRegionList2" "r.-8.6.7rg"}};{{setVar "masterRegionList3" "r.-7.7.7rg"}};{{setVar "masterRegionList4" "r.-6.6.7rg"}};{{setVar "masterRegionList5" "r.-5.6.7rg"}};{{setVar "masterRegionList6" "r.-6.5.7rg"}};{{setVar "masterRegionList7" "r.-5.5.7rg"}};{{setVar "masterRegionList8" "r.-7.4.7rg"}};{{setVar "masterRegionList9" "r.-6.4.7rg"}};{{setVar "masterRegionList10" "r.-5.4.7rg"}};{{setVar "masterRegionList11" "r.-8.3.7rg"}};{{setVar "masterRegionList12" "r.-7.3.7rg"}};{{setVar "masterRegionList13" "r.-6.3.7rg"}};{{setVar "masterRegionList14" "r.-8.2.7rg"}};{{setVar "masterRegionList15" "r.-7.2.7rg"}};{{setVar "masterRegionList16" "r.-6.2.7rg"}};{{setVar "masterRegionList17" "r.4.4.7rg"}};{{setVar "masterRegionList18" "r.4.3.7rg"}};{{setVar "masterRegionList19" "r.5.3.7rg"}};{{setVar "masterRegionList20" "r.2.2.7rg"}};{{setVar "masterRegionList21" "r.-7.-1.7rg"}};{{setVar "masterRegionList22" "r.-7.-2.7rg"}};{{setVar "masterRegionList23" "r.-6.-3.7rg"}};{{setVar "masterRegionList24" "r.-5.-3.7rg"}};{{setVar "masterRegionList25" "r.-6.-4.7rg"}};{{setVar "masterRegionList26" "r.-5.-4.7rg"}};{{setVar "masterRegionList27" "r.-8.-5.7rg"}};{{setVar "masterRegionList28" "r.-7.-6.7rg"}};{{setVar "masterRegionList29" "r.-8.-6.7rg"}};{{setVar "masterRegionList30" "r.-7.-5.7rg"}};{{setVar "masterRegionList31" "r.-8.-6.7rg"}};{{setVar "masterRegionList32" "r.-7.-6.7rg"}};{{setVar "masterRegionList33" "r.-8.-7.7rg"}};{{setVar "masterRegionList34" "r.6.-1.7rg"}};{{setVar "masterRegionList35" "r.7.-1.7rg"}};{{setVar "masterRegionList36" "r.8.-1.7rg"}};{{setVar "masterRegionList37" "r.6.-2.7rg"}};{{setVar "masterRegionList38" "r.7.-2.7rg"}};{{setVar "masterRegionList39" "r.-2.8.7rg"}};{{setVar "masterRegionList40" "r.-1.8.7rg"}};{{setVar "masterRegionList41" "r.-1.6.7rg"}};{{setVar "masterRegionList42" "r.-2.-1.7rg"}};{{setVar "masterRegionList43" "r.-1.-1.7rg"}};{{setVar "masterRegionList44" "r.-2.-2.7rg"}};{{setVar "masterRegionList45" "r.-1.-2.7rg"}};{{setVar "masterRegionList46" "r.-3.-7.7rg"}};{{setVar "masterRegionList47" "r.-2.-7.7rg"}};{{setVar "masterRegionList48" "r.-1.-7.7rg"}};{{setVar "masterRegionList49" "r.-3.-8.7rg"}};{{setVar "masterRegionList50" "r.-2.-8.7rg"}};{{setVar "masterRegionList51" "r.-1.-8.7rg"}};{{setVar "masterRegionList52" "r.5.-6.7rg"}};{{setVar "masterRegionList53" "r.6.-6.7rg"}};{{setVar "masterRegionList54" "r.7.-6.7rg"}};{{setVar "masterRegionList55" "r.8.-6.7rg"}};{{setVar "masterRegionList56" "r.6.-7.7rg"}};{{setVar "masterRegionList57" "r.4.8.7rg"}};{{setVar "masterRegionList58" "r.4.7.7rg"}};{{setVar "masterRegionList59" "r.4.1.7rg"}};{{setVar "masterRegionList60" "r.2.0.7rg"}};{{setVar "masterRegionList61" "r.3.0.7rg"}};{{setVar "masterRegionList62" "r.4.0.7rg"}};{{setVar "masterRegionList63" "r.2.-1.7rg"}};{{setVar "masterRegionList64" "r.3.-1.7rg"}};{{setVar "masterRegionList65" "r.4.-1.7rg"}};{{setVar "masterRegionList66" "r.2.-2.7rg"}};{{setVar "masterRegionList67" "r.3.-2.7rg"}};{{setVar "masterRegionList68" "r.2.-3.7rg"}};{{setVar "masterRegionList69" "r.3.-3.7rg"}};{{setVar "masterRegionList70" "r.7.1.7rg"}};{{setVar "masterRegionList71" "r.6.0.7rg"}};{{setVar "masterRegionList72" "r.7.0.7rg"}};{{setVar "masterRegionList73" "r.5.-4.7rg"}};{{setVar "masterRegionList74" "r.6.-4.7rg"}};{{setVar "masterRegionList75" "r.7.-4.7rg"}};{{setVar "masterRegionList76" "r.8.-4.7rg"}};{{setVar "masterRegionList77" "r.6.1.7rg"}};{{setVar "masterRegionList78" "r.4.-5.7rg"}};{{setVar "masterRegionList79" "r.5.-5.7rg"}};{{setVar "masterRegionList80" "r.6.-5.7rg"}};{{setVar "masterRegionList81" "r.7.-5.7rg"}};{{setVar "masterRegionList82" "r.8.-5.7rg"}};{{setVar "masterRegionList83" "r.4.-6.7rg"}};{{setVar "masterRegionList84" "r.8.-8.7rg"}};{{setVar "masterRegionList85" "r.4.-4.7rg"}};{{setVar "masterRegionList86" "r.3.1.7rg"}};{{setVar "masterRegionList87" "r.2.1.7rg"}};{{setVar "masterRegionList88" "r.3.2.7rg"}};{{setVar "masterRegionList89" "r.7.-3.7rg"}};{{setVar "masterRegionList90" "r.8.-7.7rg"}};{{setVar "masterRegionList91" "r.6.-8.7rg"}};{{setVar "masterRegionList92" "r.7.-8.7rg"}};{{setVar "masterRegionList93" "r.7.-7.7rg"}};{{setVar "masterRegionList94" "r.8.-2.7rg"}};
+{{setVar "masterRegionList1" "r.-8.7.7rg"}};{{setVar "masterRegionList2" "r.-8.6.7rg"}}; etc.
 
+RANDOMISE & RESET REGIONS
+* This script selects a subset of your reset regions then resets them.
+* Run this as a CSMM Server Automation job (with cron) whenever you like
+* Change the XX in randNum to be the total number of reset regions for your map +1
+* Change the {{#times 5}} to adjust the number of regions randomly selected
 
-RANDOMISE REGIONS FOR RESET
-* Run this as a CSMM Server Automation job (with cron) just before your "resetregionsnow" reboot.
+{{! Randomise Regions for Reset }} 
+sendDiscord(<channelID>, "--- Resetting 5 random regions."); 
+mrr remove -5024 5024 5024 -5024; 
+  {{#times 5}}
+    mrr add {{itemAt (arrayify (split (getVar (add "masterRegionList" (randNum 1 XX))))) this}}; 
+  {{/times}}; 
+resetregions
 
-{{! Randomise Regions for Reset }}
-mrr remove -4096 4096 4096 -4096;  
-{{#times 5}}
-    mrr add {{itemAt (arrayify (split (getVar (add "masterRegionList" (randNum 1 94))))) this}};
-{{/times}}
+RESTORE MASTER REGION LIST
+* Following the reset of the short list, you'll want to re-flag the full set of reset regions
+* Run this as a CSMM Server Automation job (with cron), starting 1 or 2 mins after the Randomise
 
-
-REBOOT SERVER TO RESET REGIONS
-* Run this as a CSMM Server Automation job. Adjust frequence with cron settings.
-* All flagged regions will be reset.
-
-resetregionsnow
-
-
-RESTORE ALL RESET REGIONS
-
-* Run this as a Custom Hook
-* Event:					logLine
-* Regex trigger:	(Loading all items took: \d.\d{7} seconds.)
-
-{{! Restore Master List }}
-{{! Ensure the #times value is at least 1 more than your number of regions }}
-mrr remove -4096 4096 4096 -4096;
-{{#times 100}}
-    {{#each (arrayify (split (getVar (add "masterRegionList" index))))}};
-        mrr add {{this}};
-    {{/each}};
+{{! Restore Master List }} 
+{{! Ensure the #times value is at least 1 more than your number of regions }} 
+mrr remove -5024 5024 5024 -5024; 
+{{#times 127}} 
+  {{#each (arrayify (split (getVar (add "masterRegionList" index))))}}; 
+    mrr add {{this}}; 
+  {{/each}}; 
 {{/times}}
 
