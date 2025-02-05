@@ -1,0 +1,48 @@
+{{! COMMENTS }}
+Like many game server communities, we offer in-game benefits to encourage financial support. 
+We give supporters a role in Discord and if linked, CSMM will provide the in-game benefits like teleports and currency.  
+It's not uncommon for CSMM to become un-linked from Discord and it can be a while before anyone notices.  
+We also wanted a way to monitor how many supporters vs non-supporters are playing.
+
+The webhook below runs when a player logs into 7 Days to Die, checks what role they have in CSMM.  
+It sends the player a private message asking them to check their role, and sends a message to a hidden Discord 
+channel that records their login.  Combined with a python discord bot to read messages in the hidden channel, 
+we now have a log of all player logins, in CSV format.  Using Excel to remove duplicates, we can now draw 
+knowledge like "In April there were 98 unique players on the server, 24 of which were supporters, 74 non-supporters."
+
+1. Set up roles in CSMM > Settings > Permissions and Roles.  We use 100, 200, 300 & 400 for four tiers of supporter, and 1000 for non-supporters.
+2. Set up your Discord in CSMM > Settings > Discord and have your players link their Discord to CSMM.  See the CSMM docs for info on the linking.
+3. Create a private channel on your Discord.  Create a Discord bot if you need to.  Google can help you there.  Give the bot access to the channel.  Get the channel ID.
+4. Set up the webhook below in CSMM > Settings > Custom Hooks as a playerConnected hook.  Change the role numbers and messages to suit your situation.  Make sure to change CHAN_ID to the channel ID of your private channel.
+5. Verify that the private channel on Discord is receiving messages from the web hook when players log in.  It should look like: <date>, <rolename>, <playername>  e.g. 2025-02-05, Diamond, TrevorJD
+
+On your monitoring computer (this could be the server itself if you have a dedicated server or self-host, or a spare PC that's turned on 24x7)...
+6. Install Python 3.13 or later.  Be sure to check the box for adding python to your path.
+7. Run:  pip install discord   and   pip install audioop-lts
+8. Download the 7d-patreon-bot.py file and save it to your folder of choice.
+9. Run the 7d-patreon-bot.py file.  It should connect and report "Logged in as <name of bot>"
+10. The first time a player logs into your 7D server, a file called player_login_log.txt will be created in the same folder as the .py file.
+11. Each time a player logs in, the player_login_log.txt should been updated.
+
+Note: The python script needs to be left running.
+
+{{Web hook - only copy below this line}}
+
+{{#if (eq player.role.level 100)}}
+	sendDiscord(CHAN_ID, "{{date "YYYY-MM-DD"}}, Diamond, ${player.name}");
+	pm2 Server ${player.name} "[f5ae42]Your supporter role is Diamond.[-] If this is not expected, please open a ticket in Discord.";
+{{else if (eq player.role.level 200)}}
+	sendDiscord(CHAN_ID, "{{date "YYYY-MM-DD"}}, Gold, ${player.name}");
+	pm2 Server ${player.name} "[f5ae42]Your supporter role is Gold.[-] If this is not expected, please open a ticket in Discord.";
+{{else if (eq player.role.level 300)}}
+	sendDiscord(CHAN_ID, "{{date "YYYY-MM-DD"}}, Silver, ${player.name}");
+	pm2 Server ${player.name} "[f5ae42]Your supporter role is Silver.[-] If this is not expected, please open a ticket in Discord.";
+{{else if (eq player.role.level 400)}}
+	sendDiscord(CHAN_ID, "{{date "YYYY-MM-DD"}}, Bronze, ${player.name}");
+	pm2 Server ${player.name} "[f5ae42]Your supporter role is Bronze.[-] If this is not expected, please open a ticket in Discord.";
+{{else if (eq player.role.level 1000)}}
+	sendDiscord(CHAN_ID, "{{date "YYYY-MM-DD"}}, Player, ${player.name}");
+	pm2 Server ${player.name} "[f5ae42]Do you get $2/month of fun from our server? Please become a patreon so we can keep the lights on!";
+{{/if}}
+
+
