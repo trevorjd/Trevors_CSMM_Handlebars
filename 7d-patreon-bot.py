@@ -51,3 +51,4 @@ async def on_message(message):
 
 # Run the bot with your token
 client.run('TOKEN')  # Replace with your bot's token
+
